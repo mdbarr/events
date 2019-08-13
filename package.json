@@ -1,0 +1,20 @@
+{
+  "name": "@mdbarr/events",
+  "version": "0.1.0",
+  "description": "Simplified JavaScript Event Emitter, adapted from @mdbarr/skyfall",
+  "main": "index.js",
+  "repository": "git@github.com:mdbarr/events.git",
+  "author": "Mark Barr <mark@hyperingenuity.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "barrkeep": "^2.2.5",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^6.1.0"
+  },
+  "scripts": {
+    "lint": "eslint index.js"
+  }
+}
