@@ -24,9 +24,9 @@ acorn-jsx@^5.0.2:
   integrity sha512-tiNTrP1MP0QrChmD2DdupCr6HWSFeKVw5d/dHTu4Y7rkAkRhU/Dt7dphAfIUyxtHpl/eBVip5uTNSpQJHylpAw==
 
 acorn@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.0.0.tgz#26b8d1cd9a9b700350b71c0905546f64d1284e7a"
-  integrity sha512-PaF/MduxijYYt7unVGRuds1vBC9bFxbNf+VWqhOClfdgy7RlVkQqt610ig1/yxTgsDIfW1cWDel5EBbOy3jdtQ==
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.1.0.tgz#949d36f2c292535da602283586c2477c57eb2d6c"
+  integrity sha512-kL5CuoXA/dgxlBbVrflsflzQ3PAas7RYZB52NOm/6839iVYJgKMJ3cQJD+t2i5+qFa8h3MDpEOJiS64E8JLnSQ==
 
 ajv@^6.10.0, ajv@^6.10.2:
   version "6.10.2"
@@ -77,10 +77,10 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
 
-barrkeep@^2.2.7:
-  version "2.2.7"
-  resolved "https://registry.yarnpkg.com/barrkeep/-/barrkeep-2.2.7.tgz#13a0aecd0e3acd715ba11507253c5e89ede10753"
-  integrity sha512-knKNIF7JCG+aBrS43ElLiCOfO48A8u0Hoa4CsNxghRr3ptdclC3Zf0dAPhxiIe3/Am5WYDToD/KXdC1MUYNwtQ==
+barrkeep@^2.2.9:
+  version "2.2.9"
+  resolved "https://registry.yarnpkg.com/barrkeep/-/barrkeep-2.2.9.tgz#3055baf1052136f30e0a299dc6c3d0ffb7017a82"
+  integrity sha512-9qqGevBEkWkrAJK/7pDaZdqD49PZhoLyFf0eYLicr9ZRb3zpmHwmkAWxYVHPBioIKv0xcdl0n9xDoZl0KL4UtA==
 
 brace-expansion@^1.1.7:
   version "1.1.11"
