@@ -13,7 +13,7 @@ const errorKeys = [ 'name', 'code', 'message',
 
 class Event {
   constructor({
-    id, type, data = {}, source, timestamp, flags, origin
+    id, type, data = {}, source, timestamp, flags, origin, scope
   } = {}) {
     this.id = id || uuid();
     this.object = 'event';
@@ -28,6 +28,10 @@ class Event {
     };
 
     this.origin = origin || null;
+
+    if (scope !== undefined) {
+      this.scope = scope;
+    }
 
     if (this.data instanceof Error) {
       const object = {};
