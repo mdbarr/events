@@ -300,8 +300,9 @@ class EventBus {
     const condition = args.pop() || {};
 
     const config = merge({
-      timeout: 500,
+      lastest: false,
       maximum: 10,
+      timeout: 500,
       unique: false
     }, options);
 
@@ -328,7 +329,7 @@ class EventBus {
           queues.set(event.type, []);
           timers.delete(event.type);
 
-          callback(events, context, shared);
+          callback(options.last ? events.pop() : events, context, shared);
         };
 
         if (queues.get(event.type).length >= config.maximum) {
@@ -353,7 +354,7 @@ class EventBus {
           queue = [];
           timeout = 0;
 
-          callback(events, context, shared);
+          callback(options.last ? events.pop() : events, context, shared);
         };
 
         if (queue.length >= config.maximum) {
