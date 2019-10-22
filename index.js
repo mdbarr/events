@@ -79,7 +79,7 @@ class EventBus {
 
       const evaluated = resolve(environment, variable);
 
-      return evaluated;
+      return evaluated !== undefined ? evaluated : variable;
     });
   }
 
@@ -300,7 +300,7 @@ class EventBus {
     const condition = args.pop() || {};
 
     const config = merge({
-      lastest: false,
+      last: false,
       maximum: 10,
       timeout: 500,
       unique: false
