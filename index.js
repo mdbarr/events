@@ -308,7 +308,7 @@ class EventBus {
 
     let debouncer;
 
-    if (options.unique) {
+    if (config.unique) {
       const queues = new Map();
       const timers = new Map();
 
@@ -329,7 +329,7 @@ class EventBus {
           queues.set(event.type, []);
           timers.delete(event.type);
 
-          callback(options.last ? events.pop() : events, context, shared);
+          callback(config.last ? events.pop() : events, context, shared);
         };
 
         if (queues.get(event.type).length >= config.maximum) {
@@ -354,7 +354,7 @@ class EventBus {
           queue = [];
           timeout = 0;
 
-          callback(options.last ? events.pop() : events, context, shared);
+          callback(config.last ? events.pop() : events, context, shared);
         };
 
         if (queue.length >= config.maximum) {
