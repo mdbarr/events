@@ -1,5 +1,5 @@
 {
-  "name": "@mdbarr/events",
+  "name": "@metastack/events",
   "version": "0.1.6",
   "description": "Simplified JavaScript Event Emitter, adapted from @mdbarr/skyfall",
   "main": "index.js",
@@ -8,11 +8,12 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "barrkeep": "^2.4.4",
-    "uuid": "^3.3.3"
+    "@mdbarr/uscript": "^0.3.0",
+    "barrkeep": "^2.6.1",
+    "uuid": "^8.1.0"
   },
   "devDependencies": {
-    "eslint": "^6.7.2"
+    "eslint": "^7.1.0"
   },
   "scripts": {
     "lint": "eslint index.js"

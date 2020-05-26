@@ -1,19 +1,20 @@
 'use strict';
 
-const uuid = require('uuid/v4');
+const { v4: uuid } = require('uuid');
 const inquire = require('barrkeep/query');
-const {
-  merge, resolve
-} = require('barrkeep/utils');
+const { merge } = require('barrkeep/utils');
+const { Uscript } = require('@mdbarr/uscript');
 
-const errorKeys = [ 'name', 'code', 'message',
+const errorKeys = [
+  'name', 'code', 'message',
   'actual', 'expected', 'operator',
   'address', 'dest', 'errno', 'info',
-  'path', 'port', 'syscall', 'stack' ];
+  'path', 'port', 'syscall', 'stack',
+];
 
 class Event {
-  constructor({
-    id, type, data = {}, source, timestamp, flags, origin, scope
+  constructor ({
+    id, type, data = {}, source, timestamp, flags, origin,
   } = {}) {
     this.id = id || uuid();
     this.object = 'event';
@@ -24,14 +25,10 @@ class Event {
 
     this.flags = flags || {
       ignored: false,
-      unhandled: false
+      unhandled: false,
     };
 
     this.origin = origin || null;
-
-    if (scope !== undefined) {
-      this.scope = scope;
-    }
 
     if (this.data instanceof Error) {
       const object = {};
@@ -46,13 +43,13 @@ class Event {
 }
 
 class Exception extends Event {
-  constructor(options) {
+  constructor (options) {
     super(options);
 
     this.object = 'exception';
   }
 
-  toError() {
+  toError () {
     const error = new Error(this.data.message);
     Object.assign(error, this.data);
 
@@ -61,7 +58,7 @@ class Exception extends Event {
 }
 
 class EventBus {
-  constructor(shared = {}, options = {}) {
+  constructor (shared = {}, options = {}) {
     this.id = uuid();
     this.object = 'event-bus';
     this.$groups = new Map();
@@ -71,19 +68,30 @@ class EventBus {
 
     this.$options = options;
     this.$shared = merge(shared, { id: this.id }, true);
+    this.$uscript = new Uscript(this.$shared);
   }
 
-  $handlebars(string, environment) {
-    return string.replace(/{{(.*?)}}/g, (match, variable) => {
-      variable = variable.trim();
+  $handlebars (string, environment) {
+    return string.replace(/{{(.*?)}}/g, (match, expression) => {
+      let evaluated;
 
-      const evaluated = resolve(environment, variable);
+      expression = expression.trim();
 
-      return evaluated !== undefined ? evaluated : variable;
+      try {
+        evaluated = this.$uscript.eval(expression, environment);
+      } catch (error) {
+        evaluated = expression;
+        this.emit({
+          type: `event-bus:handlerbars:${ error.name.toLowerCase() }`,
+          data: error,
+        });
+      }
+
+      return evaluated;
     });
   }
 
-  $parsePattern(pattern) {
+  $parsePattern (pattern) {
     let regexp;
 
     if (pattern instanceof RegExp) {
@@ -102,8 +110,8 @@ class EventBus {
     return [ key, regexp ];
   }
 
-  $addListener({
-    pattern, condition = {}, query = 'data', count = Infinity, callback
+  $addListener ({
+    pattern, condition = {}, query = 'data', count = Infinity, callback,
   }) {
     const [ key, regexp ] = this.$parsePattern(pattern);
 
@@ -118,7 +126,7 @@ class EventBus {
         id: uuid(),
         key,
         regexp,
-        listeners: new Map()
+        listeners: new Map(),
       };
       this.$groups.set(key, group);
     }
@@ -134,9 +142,9 @@ class EventBus {
       query,
       context: {
         id,
-        pattern
+        pattern,
       },
-      callback
+      callback,
     };
 
     this.$ids.set(id, listener);
@@ -146,7 +154,7 @@ class EventBus {
     return id;
   }
 
-  ignore(pattern, condition = {}) {
+  ignore (pattern, condition = {}) {
     const [ key, regexp ] = this.$parsePattern(pattern);
 
     const id = uuid();
@@ -155,7 +163,7 @@ class EventBus {
       pattern,
       condition,
       key,
-      regexp
+      regexp,
     };
 
     this.$ignores.push(ignore);
@@ -163,7 +171,7 @@ class EventBus {
     return id;
   }
 
-  unignore(pattern) {
+  unignore (pattern) {
     for (let i = 0; i < this.$ignores.length; i++) {
       const ignore = this.$ignores[i];
 
@@ -176,7 +184,7 @@ class EventBus {
     return false;
   }
 
-  emit(...args) {
+  emit (...args) {
     let event;
 
     if (args.length === 1) {
@@ -189,7 +197,7 @@ class EventBus {
     } else if (args.length === 2) {
       event = new Event({
         type: args[0],
-        data: args[1]
+        data: args[1],
       });
     }
 
@@ -225,7 +233,17 @@ class EventBus {
 
     if (callbacks.size) {
       for (const callback of callbacks) {
-        process.nextTick(callback, event, contexts.get(callback), this.$shared);
+        process.nextTick(() => {
+          try {
+            return callback(event, contexts.get(callback), this.$shared);
+          } catch (error) {
+            this.emit({
+              type: 'event-bus:listener:error',
+              data: error,
+            });
+          }
+          return true;
+        });
       }
     } else {
       event.flags.unhandled = true;
@@ -236,7 +254,7 @@ class EventBus {
     }
   }
 
-  on(...args) {
+  on (...args) {
     const pattern = args.shift();
     const callback = args.pop();
 
@@ -249,11 +267,11 @@ class EventBus {
       condition,
       count,
       query,
-      callback
+      callback,
     });
   }
 
-  when(...args) {
+  when (...args) {
     const pattern = args.shift();
     const callback = args.pop();
 
@@ -266,21 +284,21 @@ class EventBus {
       condition,
       count,
       query,
-      callback
+      callback,
     });
   }
 
-  all(callback) {
+  all (callback) {
     return this.$addListener({
       pattern: '*',
       condition: {},
       count: Infinity,
       query: 'data',
-      callback
+      callback,
     });
   }
 
-  once(...args) {
+  once (...args) {
     const pattern = args.shift();
     const callback = args.pop();
     const condition = args.pop() || {};
@@ -289,26 +307,25 @@ class EventBus {
       pattern,
       condition,
       count: 1,
-      callback
+      callback,
     });
   }
 
-  debounce(...args) {
+  debounce (...args) {
     const pattern = args.shift();
     const callback = args.pop();
     const options = args.shift() || {};
     const condition = args.pop() || {};
 
     const config = merge({
-      last: false,
-      maximum: 10,
       timeout: 500,
-      unique: false
+      maximum: 10,
+      unique: false,
     }, options);
 
     let debouncer;
 
-    if (config.unique) {
+    if (options.unique) {
       const queues = new Map();
       const timers = new Map();
 
@@ -329,7 +346,7 @@ class EventBus {
           queues.set(event.type, []);
           timers.delete(event.type);
 
-          callback(config.last ? events.pop() : events, context, shared);
+          callback(events, context, shared);
         };
 
         if (queues.get(event.type).length >= config.maximum) {
@@ -354,7 +371,7 @@ class EventBus {
           queue = [];
           timeout = 0;
 
-          callback(config.last ? events.pop() : events, context, shared);
+          callback(events, context, shared);
         };
 
         if (queue.length >= config.maximum) {
@@ -369,11 +386,11 @@ class EventBus {
       pattern,
       condition,
       count: Infinity,
-      callback: debouncer
+      callback: debouncer,
     });
   }
 
-  transform(...args) {
+  transform (...args) {
     const inputType = args.shift();
     const transform = args.pop();
     const outputType = args.pop();
@@ -384,9 +401,9 @@ class EventBus {
         transform(event.data, (value) => {
           if (value !== false) {
             this.emit({
-              type: this.$handlebars(outputType, event.data),
+              type: this.$handlebars(outputType, value),
               data: value,
-              source: event.id
+              source: event.id,
             });
           }
         });
@@ -394,9 +411,9 @@ class EventBus {
         const value = transform(event.data);
         if (value !== false) {
           this.emit({
-            type: this.$handlebars(outputType, event.data),
+            type: this.$handlebars(outputType, value),
             data: value,
-            source: event.id
+            source: event.id,
           });
         }
       }
@@ -406,11 +423,11 @@ class EventBus {
       pattern: inputType,
       condition,
       count: Infinity,
-      callback: transformer
+      callback: transformer,
     });
   }
 
-  link(...args) {
+  link (...args) {
     const inputType = args.shift();
     const outputType = args.pop();
     const condition = args.shift();
@@ -419,7 +436,7 @@ class EventBus {
       this.emit({
         type: this.$handlebars(outputType, event.data),
         data: event.data,
-        source: event.id
+        source: event.id,
       });
     };
 
@@ -427,11 +444,11 @@ class EventBus {
       pattern: inputType,
       condition,
       count: Infinity,
-      callback: linker
+      callback: linker,
     });
   }
 
-  eventNames() {
+  eventNames () {
     const names = [];
     for (const [ , group ] of this.$groups) {
       for (const [ , listener ] of group.listeners) {
@@ -442,7 +459,7 @@ class EventBus {
     return names.sort();
   }
 
-  off(...args) {
+  off (...args) {
     if (args.length === 1) {
       const id = args[0];
       const listener = this.$ids.get(id);
@@ -471,7 +488,7 @@ class EventBus {
     return false;
   }
 
-  clear() {
+  clear () {
     this.$groups.clear();
     this.$ids.clear();
   }
@@ -480,5 +497,5 @@ class EventBus {
 module.exports = {
   Event,
   EventBus,
-  Exception
+  Exception,
 };
