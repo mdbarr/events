@@ -9,11 +9,11 @@
   "private": false,
   "dependencies": {
     "@mdbarr/uscript": "^0.3.0",
-    "barrkeep": "^2.6.1",
-    "uuid": "^8.1.0"
+    "barrkeep": "^2.6.6",
+    "uuid": "^8.2.0"
   },
   "devDependencies": {
-    "eslint": "^7.1.0"
+    "eslint": "^7.4.0"
   },
   "scripts": {
     "lint": "eslint index.js"
