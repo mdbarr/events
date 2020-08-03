@@ -1,5 +1,5 @@
 {
-  "name": "@metastack/events",
+  "name": "@hyperingenuity/events",
   "version": "0.2.1",
   "description": "JavaScript Event Emitter Library",
   "main": "index.js",
@@ -8,12 +8,12 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "@mdbarr/uscript": "^0.3.0",
+    "@hyperingenuity/uscript": "^0.4.0",
     "barrkeep": "^2.6.6",
-    "uuid": "^8.2.0"
+    "uuid": "^8.3.0"
   },
   "devDependencies": {
-    "eslint": "^7.4.0"
+    "eslint": "^7.6.0"
   },
   "scripts": {
     "lint": "eslint index.js"

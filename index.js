@@ -3,7 +3,7 @@
 const { v4: uuid } = require('uuid');
 const inquire = require('barrkeep/query');
 const { merge } = require('barrkeep/utils');
-const { Uscript } = require('@mdbarr/uscript');
+const { Uscript } = require('@hyperingenuity/uscript');
 
 const errorKeys = [
   'name', 'code', 'message',

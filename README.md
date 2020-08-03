@@ -1,2 +1,2 @@
 # events
-Simplified JavaScript Event Emitter, adapted from @mdbarr/skyfall
+Simplified JavaScript Event Emitter, adapted from @hyperingenuity/skyfall
