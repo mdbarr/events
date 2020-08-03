@@ -1,6 +1,6 @@
 {
   "name": "@hyperingenuity/events",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "JavaScript Event Emitter Library",
   "main": "index.js",
   "repository": "git@github.com:mdbarr/events.git",
