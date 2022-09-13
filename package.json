@@ -8,8 +8,8 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "@hyperingenuity/uscript": "^0.4.1",
-    "barrkeep": "^2.11.0",
+    "@hyperingenuity/uscript": "^0.4.3",
+    "barrkeep": "^2.11.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
