@@ -9,11 +9,11 @@
   "private": false,
   "dependencies": {
     "@hyperingenuity/uscript": "^0.4.0",
-    "barrkeep": "^2.9.2",
-    "uuid": "^8.3.2"
+    "barrkeep": "^2.11.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "eslint": "^7.23.0"
+    "eslint": "^8.23.1"
   },
   "scripts": {
     "lint": "eslint index.js"
