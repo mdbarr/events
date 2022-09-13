@@ -41,12 +41,12 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@hyperingenuity/uscript@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@hyperingenuity/uscript/-/uscript-0.4.0.tgz#7807b1a13dd160a2a39656bb1a307a6f0dfe49ce"
-  integrity sha512-KSBptDCLul4aBxPot/ybQrOOlOkpPeZNsefPBZXBHAAQDLXdgU7kgt6ciSJXsii9zwa2EYs73BVJjULrGNz2/g==
+"@hyperingenuity/uscript@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@hyperingenuity/uscript/-/uscript-0.4.1.tgz#4b8c5c407ac1518f79bf77853cf6cb62a5d64cf8"
+  integrity sha512-0Neys7ezQAABAXN/jeF39OOzCekHQ8i7tZFVtSIFYLiTbZK2OAvDZ/l50LlEPOvPGzFq+g2yBVO+nKZCNSLaYQ==
   dependencies:
-    barrkeep "^2.6.6"
+    barrkeep "^2.11.1"
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -116,10 +116,15 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
-barrkeep@^2.11.0, barrkeep@^2.6.6:
+barrkeep@^2.11.0:
   version "2.11.0"
   resolved "https://registry.yarnpkg.com/barrkeep/-/barrkeep-2.11.0.tgz#5309dae6d042348b703dc2a41c9601f4e029feec"
   integrity sha512-rLyb5ZVLGnGvY65+EZwcmyrEpHFl+x4+XCNf9EZOW+lvKi7ovUFQzxv+WeEEMEm6OooPeI7qvszrr3AocQICow==
+
+barrkeep@^2.11.1:
+  version "2.11.1"
+  resolved "https://registry.yarnpkg.com/barrkeep/-/barrkeep-2.11.1.tgz#a12a1c4c689448cfce65071ed8dc9b1299ea621d"
+  integrity sha512-E12rpsKv/lRkH4G3n4VELTSEJw1Bgbe8z4443OTlba50STMxoduR9t1smJEEX57vaz6RTDRCCyW2bFYlIqQIVw==
 
 brace-expansion@^1.1.7:
   version "1.1.11"
