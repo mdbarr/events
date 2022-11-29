@@ -233,7 +233,7 @@ class EventBus {
 
     if (callbacks.size) {
       for (const callback of callbacks) {
-        process.nextTick(() => {
+        setImmediate(() => {
           try {
             return callback(event, contexts.get(callback), this.$shared);
           } catch (error) {
